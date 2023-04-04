@@ -188,4 +188,32 @@ class IngredientController extends Controller
         }
     }
 
+    public function getIngredientById(Request $request, $id)
+    {
+        try {
+            $ingredient = Ingredient::query()->find($id);
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Get Ingredient successfully",
+                    "data" => [
+                        'id' => $ingredient->id,
+                        'name' => $ingredient->name,
+                        'type' => $ingredient->type,
+                        'quantity' => $ingredient->quantity
+                    ]
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
 }
