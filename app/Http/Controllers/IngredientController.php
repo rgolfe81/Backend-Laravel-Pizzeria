@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class IngredientController extends Controller
 {
@@ -34,6 +35,52 @@ class IngredientController extends Controller
                 [
                     "success" => false,
                     "message" => "Error getting ingredients"
+                ],
+                500
+            );
+        }
+    }
+
+    public function createIngredient(Request $request)
+    {
+        try {
+
+            Log::info("Create Ingredient");
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required | regex:/^[A-Za-z0-9]+$/',
+                'type' => 'required | regex:/^[A-Za-z0-9]+$/',
+                'quantity' => 'required | numeric',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
+            $name = $request->input('name');
+            $type = $request->input('type');
+            $quantity = $request->input('quantity');
+
+            $ingredient = new Ingredient();
+            $ingredient->name = $name;
+            $ingredient->type = $type;
+            $ingredient->quantity = $quantity;
+            $ingredient->save();
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Ingredient created",
+                    "data" => $ingredient
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            Log::error("CREATING INGREDIENT: " . $th->getMessage());
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => "Error creating ingredient"
                 ],
                 500
             );
