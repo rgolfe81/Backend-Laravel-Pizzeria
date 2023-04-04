@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -39,3 +40,12 @@ Route::post('/ingredients', [PizzaController::class, 'createIngredient'] );
 Route::put('/ingredients{id}', [PizzaController::class, 'updateIngredient'] );
 Route::delete('/ingredients/{id}', [PizzaController::class, 'deleteIngredient']);
 Route::get('/ingredients/{id}', [PizzaController::class, 'getPizzaIngredientById']);
+
+// Auth
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::group([
+    'middleware' => 'auth:sanctum'
+    ], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
