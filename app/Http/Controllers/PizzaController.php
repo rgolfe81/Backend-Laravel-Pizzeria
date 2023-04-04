@@ -50,8 +50,10 @@ class PizzaController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required | regex:/^[A-Za-z0-9]+$/',
-                'type' => ['required', 
-                    Rule::in(['Slim', 'Classic', 'Original'])],
+                'type' => [
+                    'required',
+                    Rule::in(['Slim', 'Classic', 'Original'])
+                ],
                 'price' => 'required',
             ]);
 
@@ -154,5 +156,59 @@ class PizzaController extends Controller
         }
     }
 
+    public function deletePizza(Request $request, $id)
+    {
+        try {
 
+            Pizza::destroy($id);
+
+            // otra manera de hacerlo
+            // Pizza::query()->where('id', $id)->where('is_active', 0)->delete();
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Pizza deleted"
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
+
+    public function getPizzaById(Request $request, $id)
+    {
+        try {
+            $pizza = Pizza::query()->find($id);
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Get Pizza successfully",
+                    "data" => [
+                        'id' => $pizza->id,
+                        'name' => $pizza->name,
+                        'type' => $pizza->type,
+                        'price' => $pizza->price
+                    ]
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
 }

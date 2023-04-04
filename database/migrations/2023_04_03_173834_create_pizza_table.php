@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('pizza', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type');
-            $table->float('price');
+            $table->string('name')->nullable(false);
+            $table->enum("type", ['Slim','Classic','Original']);
+            $table->float('price')->nullable(false);
             $table->timestamps();
         });
     }
