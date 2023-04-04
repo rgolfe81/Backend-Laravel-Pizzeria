@@ -11,15 +11,34 @@ class PizzaController extends Controller
 {
     public function getAllPizzas()
     {
-        // ToDo manejo de errores
-        $pizzas = Pizza::query()->get();
+        try {
+            $pizzas = Pizza::query()->get();
+            Log::info("Get Pizzas");
 
+            if ($pizzas->isEmpty()) {
+                return response()->json(
+                    [
+                        "success" => false,
+                        "message" => "No pizzas found"
+                    ],
+                    500
+                );
+            }
 
-
-        return [
-            "success" => true,
-            "data" => $pizzas
-        ];
+            return [
+                "success" => true,
+                "data" => $pizzas
+            ];
+        } catch (\Throwable $th) {
+            Log::error("GETTING PIZZAS: " . $th->getMessage());
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => "Error getting pizzas"
+                ],
+                500
+            );
+        }
     }
 
     public function createPizza(Request $request)
@@ -31,6 +50,7 @@ class PizzaController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required | regex:/^[A-Za-z0-9]+$/',
                 'type' => 'required',
+                'price' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -39,10 +59,12 @@ class PizzaController extends Controller
 
             $name = $request->input('name');
             $type = $request->input('type');
+            $price = $request->input('price');
 
             $pizza = new Pizza();
             $pizza->name = $name;
             $pizza->type = $type;
+            $pizza->price = $price;
             $pizza->save();
 
             return response()->json(
