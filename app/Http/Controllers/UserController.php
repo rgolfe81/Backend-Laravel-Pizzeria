@@ -39,6 +39,7 @@ class UserController extends Controller
             Response::HTTP_CREATED
         );
     }
+    
     public function login(Request $request)
     {
 
@@ -72,6 +73,23 @@ class UserController extends Controller
         return response()->json(
             $res,
             Response::HTTP_ACCEPTED
+        );
+    }
+
+    public function logout(Request $request)
+    {
+        $accessToken = $request->bearerToken();
+        // Get access token from database
+        $token = PersonalAccessToken::findToken($accessToken);
+        // Revoke token
+        $token->delete();
+        
+        return response(
+            [
+                "success" => true,
+                "message" => "Logout successfully"
+            ],
+            Response::HTTP_OK
         );
     }
 }
