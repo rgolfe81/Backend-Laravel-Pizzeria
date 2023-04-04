@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PizzaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,6 @@ Route::delete('/users', [UserController::class, 'deleteUsers'] );
 // Pizzas
 Route::get('/pizzas', [PizzaController::class, 'getAllPizzas'] );
 Route::post('/pizzas', [PizzaController::class, 'createPizza'] );
-Route::put('/pizzas', [PizzaController::class, 'putPizzas'] );
-Route::delete('/pizzas', [PizzaController::class, 'deletePizzas'] );
+Route::put('/pizzas{id}', [PizzaController::class, 'updatePizza'] );
+Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
+Route::get('/pizzas/{id}', [PizzaController::class, 'getPizzaById']);
