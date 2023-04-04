@@ -32,3 +32,10 @@ Route::post('/pizzas', [PizzaController::class, 'createPizza'] );
 Route::put('/pizzas{id}', [PizzaController::class, 'updatePizza'] );
 Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'getPizzaById']);
+
+// Ingredients
+Route::get('/ingredients', [PizzaController::class, 'getAllIngredients'] );
+Route::post('/ingredients', [PizzaController::class, 'createIngredient'] );
+Route::put('/ingredients{id}', [PizzaController::class, 'updateIngredient'] );
+Route::delete('/ingredients/{id}', [PizzaController::class, 'deleteIngredient']);
+Route::get('/ingredients/{id}', [PizzaController::class, 'getPizzaIngredientById']);

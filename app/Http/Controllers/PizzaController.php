@@ -123,6 +123,10 @@ class PizzaController extends Controller
             $type = $request->input('type');
             $price = $request->input('price');
 
+            // $pizza->name = $request->input('name');
+            // $pizza->type = $request->input('type');
+            // $pizza->price = $request->input('price');
+
             if (isset($name)) {
                 $pizza->name = $name;
             }
@@ -159,6 +163,17 @@ class PizzaController extends Controller
     public function deletePizza(Request $request, $id)
     {
         try {
+
+            $pizza = Pizza::find($id);
+            if (!$pizza) {
+                return response()->json(
+                    [
+                        "success" => true,
+                        "message" => "Pizza doesn't exists",
+                    ],
+                    404
+                );
+            }
 
             Pizza::destroy($id);
 
