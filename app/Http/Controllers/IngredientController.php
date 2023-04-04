@@ -118,7 +118,7 @@ class IngredientController extends Controller
 
             // $ingredient->name = $request->input('name');
             // $ingredient->type = $request->input('type');
-            // $ingredient->price = $request->input('quantity');
+            // $ingredient->quantity = $request->input('quantity');
 
             if (isset($name)) {
                 $ingredient->name = $name;
@@ -139,6 +139,41 @@ class IngredientController extends Controller
                     "success" => true,
                     "message" => "Ingredient updated",
                     "data" => $ingredient
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
+
+    public function deleteIngredient(Request $request, $id)
+    {
+        try {
+
+            $ingredient = Ingredient::find($id);
+            if (!$ingredient) {
+                return response()->json(
+                    [
+                        "success" => true,
+                        "message" => "Ingredient doesn't exists",
+                    ],
+                    404
+                );
+            }
+
+            Ingredient::destroy($id);
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Ingredient deleted"
                 ],
                 200
             );
