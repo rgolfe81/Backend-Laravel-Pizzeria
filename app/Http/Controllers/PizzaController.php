@@ -123,10 +123,6 @@ class PizzaController extends Controller
             $type = $request->input('type');
             $price = $request->input('price');
 
-            // $pizza->name = $request->input('name');
-            // $pizza->type = $request->input('type');
-            // $pizza->price = $request->input('price');
-
             if (isset($name)) {
                 $pizza->name = $name;
             }

@@ -91,9 +91,9 @@ class IngredientController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required | regex:/^[A-Za-z0-9]+$/',
-                'type' => 'required | regex:/^[A-Za-z0-9]+$/',
-                'quantity' => 'required | numeric',
+                'name' => 'regex:/^[\p{L}0-9]+$/u',
+                'type' => 'regex:/^[\p{L}0-9]+$/u',
+                'quantity' => 'numeric',
             ]);
 
             if ($validator->fails()) {
@@ -116,9 +116,6 @@ class IngredientController extends Controller
             $type = $request->input('type');
             $quantity = $request->input('quantity');
 
-            // $ingredient->name = $request->input('name');
-            // $ingredient->type = $request->input('type');
-            // $ingredient->quantity = $request->input('quantity');
 
             if (isset($name)) {
                 $ingredient->name = $name;
@@ -128,7 +125,7 @@ class IngredientController extends Controller
                 $ingredient->type = $type;
             }
 
-            if (isset($price)) {
+            if (isset($quantity)) {
                 $ingredient->quantity = $quantity;
             }
 
