@@ -222,4 +222,30 @@ class PizzaController extends Controller
             );
         }
     }
+
+    public function getPizzaByIdWithReviews(Request $request, $id)
+    {
+        // ToDo manejo de errores
+        try {
+            // $pizzaByIdWithReviews = Pizza::query()->find($id)->reviews;
+
+            $pizzaByIdWithReviews = Pizza::with(['reviews', 'reviews.user'])->find($id);
+
+            return [
+                "success" => true,
+                "data" => $pizzaByIdWithReviews
+            ];
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving pizza with reviews: '.$th->getMessage());
+
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
+
 }

@@ -11,4 +11,8 @@ class Pizza extends Model
 
     protected $table = 'pizza';
 
+    public function reviews(){
+        return $this-> hasMany(Review::class);
+    }
+
 }
