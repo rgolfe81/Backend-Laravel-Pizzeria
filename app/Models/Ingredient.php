@@ -10,4 +10,9 @@ class Ingredient extends Model
     use HasFactory;
 
     protected $table = 'ingredient';
+
+    public function pizza()
+    {
+        return $this->belongsToMany(Pizza::class, 'ingredient_pizza');
+    }
 }
