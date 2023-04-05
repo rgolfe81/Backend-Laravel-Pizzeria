@@ -124,15 +124,15 @@ class PizzaController extends Controller
             $price = $request->input('price');
 
             if (isset($name)) {
-                $pizza->name = $name;
+                $pizza->name = $request->input('name');
             }
 
             if (isset($type)) {
-                $pizza->type = $type;
+                $pizza->type = $request->input('type');
             }
 
             if (isset($price)) {
-                $pizza->price = $price;
+                $pizza->price = $request->input('price');
             }
 
             $pizza->save();

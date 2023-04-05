@@ -118,15 +118,15 @@ class IngredientController extends Controller
 
 
             if (isset($name)) {
-                $ingredient->name = $name;
+                $ingredient->name = $request->input('name');
             }
 
             if (isset($type)) {
-                $ingredient->type = $type;
+                $ingredient->type = $request->input('type');
             }
 
             if (isset($quantity)) {
-                $ingredient->quantity = $quantity;
+                $ingredient->quantity = $request->input('quantity');
             }
 
             $ingredient->save();
