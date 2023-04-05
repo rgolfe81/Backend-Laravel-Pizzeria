@@ -24,10 +24,10 @@ Route::get('/', function () {
 });
 
 // Users
-// Route::get('/users', [UserController::class, 'getUsers'] );
-// Route::post('/users', [UserController::class, 'postUsers'] );
-// Route::put('/users', [UserController::class, 'putUsers'] );
-// Route::delete('/users', [UserController::class, 'deleteUsers'] );
+Route::get('/users', [UserController::class, 'getUsers'] );
+Route::post('/users', [UserController::class, 'postUsers'] );
+Route::put('/users', [UserController::class, 'putUsers'] );
+Route::delete('/users', [UserController::class, 'deleteUsers'] );
 
 // Pizzas
 Route::get('/pizzas', [PizzaController::class, 'getAllPizzas'] );
@@ -35,6 +35,10 @@ Route::post('/pizzas', [PizzaController::class, 'createPizza'] );
 Route::put('/pizzas/{id}', [PizzaController::class, 'updatePizza'] );
 Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'getPizzaById']);
+
+Route::get('/pizzas/reviews/{id}', [PizzaController::class, 'getPizzaByIdWithReviews']);
+Route::get('/pizzas/ingredients/{id}', [PizzaController::class, 'getPizzaByIdWithIngredients']);
+Route::post('/pizzas/add-ingredient/{id}', [PizzaController::class, 'addIngredientToPizzaId']);
 
 // Ingredients
 Route::get('/ingredients', [IngredientController::class, 'getAllIngredients'] );

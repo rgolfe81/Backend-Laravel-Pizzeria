@@ -32,7 +32,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -44,5 +43,11 @@ class User extends Authenticatable
 
     public function reviews(){
         return $this-> hasMany(Review::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; 
+        //faltaría crear la tabla y la migración de Role e indicar el valor de role. Esto es un ejemplo
     }
 }
