@@ -19,13 +19,12 @@ class isAdmin
     public function handle(Request $request, Closure $next): Response
     {
         try {
-            // Verificar si el usuario está autenticado y es administrador
-            // if ((Auth::check()) && (Auth::user()->isAdmin())) 
-            // {
-                Log::info('Esto es el middleware de IsAdmin');
+            if ($request->is_admin === 'true') 
+            {
+                Log::info('Aceso aceptado por Middleware de IsAdmin');
                 return $next($request);              
-            // }
-            return redirect('/');
+            }
+            return response()->json('No estás autorizado', 401);
 
         } catch (\Throwable $th) {
             Log::error("Register error: " . $th->getMessage());

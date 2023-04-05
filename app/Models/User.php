@@ -45,9 +45,7 @@ class User extends Authenticatable
         return $this-> hasMany(Review::class);
     }
 
-    public function isAdmin()
-    {
-        return $this->role === 'admin'; 
-        //faltaría crear la tabla y la migración de Role e indicar el valor de role. Esto es un ejemplo
+    public function roles(){
+        return $this-> belongsTo(Role::class);
     }
 }
