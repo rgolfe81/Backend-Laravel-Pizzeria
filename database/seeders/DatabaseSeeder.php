@@ -11,14 +11,15 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        \App\Models\User::factory(30)->create();
+    {      
         $this->call([
+            RoleSeeder::class,
             PizzaSeeder::class,
         ]);
         $this->call([
             IngredientSeeder::class,
         ]);
         \App\Models\Review::factory(50)->create();
+        \App\Models\User::factory(30)->create();
     }
 }
