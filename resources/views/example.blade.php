@@ -21,6 +21,8 @@
         </style>
     </head>
     <body class="antialiased">
-      <h1>Bienvenido nuestra pizzeria</h1>
+      <h3>Hola {{$user->name}},</h3>
+      <br />
+      <p>Ya eres usuario de nuestra pizzeria.</p>
     </body>
 </html>

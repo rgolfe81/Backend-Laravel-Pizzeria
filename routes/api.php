@@ -50,9 +50,8 @@ Route::get('/ingredients/{id}', [IngredientController::class, 'getIngredientById
 // Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::group([
-    'middleware' => 'auth:sanctum'
-    ], function () {
+Route::group(
+    ['middleware' => ['auth:sanctum', 'isAdmin']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
 });
@@ -63,3 +62,6 @@ Route::group([
     ], function () {
         Route::post('/reviews', [ReviewController::class, 'createReview']);
 });
+
+// Email
+Route::get('/send-email-example', [ExampleMailController::class, 'sendExampleEmail']);
